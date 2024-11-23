@@ -1,14 +1,15 @@
 {
-  "files": [],
-    "compilerOptions": {
-    "types": ["vitest", "node"],
+  "compilerOptions": {
+    "types": ["vitest", "node"], // Include Vitest and Node.js types
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "strict": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
   },
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vitest.config.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "node_modules"],
+  "references": [{ "path": "./tsconfig.app.json" }]
 }
