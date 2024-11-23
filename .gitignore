@@ -1,0 +1,43 @@
+# General ignores
+*.log
+*.pyc
+*.pyo
+__pycache__/
+.DS_Store
+.env
+.vscode/
+.idea/
+node_modules/
+build/
+dist/
+
+# Django-specific ignores
+*.sqlite3
+db.sqlite3
+*.pyc
+*.pyo
+*.pyd
+.migrations/
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# React/Vite-specific ignores
+node_modules/
+dist/
+.vite/
+*.cache
+.eslintcache
+*.lock
+*.local
+
+# Tailwind CSS output (if generated)
+*.css.map
+tailwind.config.js
+
+# Ignore generated files by package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
