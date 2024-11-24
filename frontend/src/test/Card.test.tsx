@@ -1,8 +1,7 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Provides extended matchers like toBeInTheDocument
-import Card from './Card';
 import { describe, expect, it } from 'vitest';
-import React from 'react';
+import Card from '../components/Card';
 
 describe('Card Component', () => {
   it('renders the card with the correct title and value', () => {
