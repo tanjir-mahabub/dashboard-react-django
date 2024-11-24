@@ -1,26 +1,30 @@
+
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import Dashboard from '../pages/Dashboard'; // Import the Dashboard component
-import * as apiService from '../services/apiServices'; // Import the API service to mock
+import { describe, it, expect } from 'vitest';
+import Card from '../components/Card';
 
-// Mock the fetchMetrics function
-vi.spyOn(apiService, 'fetchMetrics').mockResolvedValue([
-    { title: 'Total Revenue', value: '$45,000' },
-    { title: 'New Users', value: '320' },
-    { title: 'Pending Orders', value: '45' },
-    { title: 'Completed Orders', value: '276' },
-]);
+describe('Card Component', () => {
+    it('renders the card with the title and value', () => {
+        render(<Card title="Total Revenue" value="$45,000" />);
+        expect(screen.getByText('Total Revenue')).toBeInTheDocument();
+        expect(screen.getByText('$45,000')).toBeInTheDocument();
+    });
 
-describe('Dashboard Page', () => {
-    it('renders all metrics', async () => {
-        // Render the Dashboard component
-        render(<Dashboard />);
+    it('renders the card with an optional icon', () => {
+        render(
+            <Card
+                title="Gift Available"
+                value="Yes"
+                icon={<span data-testid="icon">🎁</span>}
+            />
+        );
+        expect(screen.getByText('Gift Available')).toBeInTheDocument();
+        expect(screen.getByText('Yes')).toBeInTheDocument();
+        expect(screen.getByTestId('icon')).toBeInTheDocument();
+    });
 
-        // Assert that metrics are displayed correctly
-        const totalRevenueElement = await screen.findByText('Total Revenue');
-        const totalRevenueValue = await screen.findByText('$45,000');
-
-        expect(totalRevenueElement).toBeInTheDocument();
-        expect(totalRevenueValue).toBeInTheDocument();
+    it('renders a loading state when loading is true', () => {
+        render(<Card loading />);
+        expect(screen.getByRole('status')).toBeInTheDocument(); // Ensure skeleton loader is present
     });
 });

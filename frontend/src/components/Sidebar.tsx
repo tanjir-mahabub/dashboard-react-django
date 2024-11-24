@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
                         <NavLink
                             to={item.to}
                             className={({ isActive }) =>
-                                `flex items-center space-x-4 p-2 rounded-md hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''
+                                `flex items-center space-x-4 p-2 rounded-md hover:bg-gray-700 ${isActive ? 'bg-primary text-black' : ''
                                 }`
                             }
                         >

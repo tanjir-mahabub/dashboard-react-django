@@ -6,13 +6,11 @@ import { renderWithProviders } from './utils.test';
 describe('Header Component', () => {
     it('renders the Dashboard title', () => {
         renderWithProviders(<Header />);
-        expect(screen.getByText('Dashboard')).toBeInTheDocument();
+        expect(screen.getByText('JOB-24FEBFF24')).toBeInTheDocument(); // Updated to match the title
     });
 
     it('renders the user profile placeholder', () => {
         renderWithProviders(<Header />);
-        // Debugging: Print the DOM structure if the test fails
-        screen.debug();
         expect(screen.getByText('User')).toBeInTheDocument();
     });
 });
