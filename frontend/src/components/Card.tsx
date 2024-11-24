@@ -1,19 +1,25 @@
 import React from 'react';
 
-type CardProps = {
-    title: string;
-    value: string | number;
-    icon?: React.ReactNode;
-};
+interface CardProps {
+    title?: string;
+    value?: string;
+    loading?: boolean;
+}
 
-const Card: React.FC<CardProps> = ({ title, value, icon }) => {
+const Card: React.FC<CardProps> = ({ title, value, loading = false }) => {
     return (
-        <div className="bg-dark text-white p-4 rounded-lg shadow-md flex items-center space-x-4">
-            {icon && <div className="text-primary">{icon}</div>}
-            <div>
-                <h2 className="text-lg font-semibold">{title}</h2>
-                <p className="text-xl font-bold mt-2">{value}</p>
-            </div>
+        <div className="bg-gray-800 text-white p-4 rounded-md shadow-md">
+            {loading ? (
+                <div className="animate-pulse space-y-2">
+                    <div className="bg-gray-700 h-4 w-3/4 rounded"></div>
+                    <div className="bg-gray-700 h-8 w-1/2 rounded"></div>
+                </div>
+            ) : (
+                <>
+                    <h2 className="text-lg font-semibold">{title}</h2>
+                    <p className="text-2xl font-bold">{value}</p>
+                </>
+            )}
         </div>
     );
 };

@@ -8,6 +8,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     useEffect(() => {
         const root = window.document.documentElement;
+        console.log('Current classes on html:', root.classList); // Debugging
         root.classList.remove(theme === 'dark' ? 'light' : 'dark');
         root.classList.add(theme);
         localStorage.setItem('theme', theme);
