@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.urls import path
-from .views import MetricsAPIView
+from .views import DashboardMetricsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('dashboard.urls')),
-    path('metrics/', MetricsAPIView.as_view(), name='metrics'),
+    path('api/dashboard/', include('dashboard.urls')), 
+    path('metrics/', DashboardMetricsView.as_view(), name='dashboard-metrics'),
 ]
