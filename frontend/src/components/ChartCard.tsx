@@ -8,17 +8,21 @@ import {
     Title,
     Tooltip,
 } from 'chart.js';
+import useTheme from '../hooks/useTheme';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip);
 
 const ChartCard: React.FC = () => {
+    const { theme } = useTheme();
+    const isDarkMode = theme === 'dark';
+
     const data = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [
             {
                 label: 'Sales',
                 data: [120, 190, 300, 500, 200, 300],
-                backgroundColor: '#4EE2B5',
+                backgroundColor: isDarkMode ? '#4EE2B5' : '#A178F1',
             },
         ],
     };
@@ -33,8 +37,8 @@ const ChartCard: React.FC = () => {
     };
 
     return (
-        <div className="bg-gray-800 p-4 rounded-md">
-            <h2 className="text-lg font-semibold text-white">Sales Chart</h2>
+        <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
+            <h2 className="text-lg font-semibold text-dark dark:text-light pb-4">Sales Chart</h2>
             <Bar data={data} options={options} />
         </div>
     );

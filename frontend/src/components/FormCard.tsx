@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import useTheme from '../hooks/useTheme';
 
 const FormCard: React.FC = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-    });
+    const [formData, setFormData] = useState({ name: '', email: '' });
+    const { theme } = useTheme();
+    const isDarkMode = theme === 'dark';
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -17,29 +17,39 @@ const FormCard: React.FC = () => {
     };
 
     return (
-        <div className="bg-gray-800 p-4 rounded-md">
-            <h2 className="text-lg font-semibold text-white">User Info Form</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full p-2 bg-gray-700 text-white rounded-md"
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full p-2 bg-gray-700 text-white rounded-md"
-                />
-                <button type="submit" className="w-full p-2 bg-secondary rounded-md">
-                    Submit
-                </button>
-            </form>
+       <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
+            <h2 className="text-lg font-semibold pb-4">User Info Form</h2>
+            <div className="flex w-full h-full justify-center items-center">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className={`w-full p-2 rounded-md ${isDarkMode ? 'bg-gray-700 text-light' : 'bg-gray-200 text-dark'
+                            }`}
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={`w-full p-2 rounded-md ${isDarkMode ? 'bg-gray-700 text-light' : 'bg-gray-200 text-dark'
+                            }`}
+                    />
+                    <button
+                        type="submit"
+                        className={`w-full p-2 rounded-md ${isDarkMode
+                            ? 'bg-secondary text-black'
+                            : 'bg-primary text-light hover:bg-primary/80'
+                            }`}
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

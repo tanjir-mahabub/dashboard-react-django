@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import Card from '../components/Card';
@@ -25,6 +24,12 @@ describe('Card Component', () => {
 
   it('renders a loading state when loading is true', () => {
     render(<Card loading />);
-    expect(screen.getByRole('status')).toBeInTheDocument(); // Ensure skeleton loader is present
+    expect(screen.getByRole('status', { name: 'Loading...' })).toBeInTheDocument(); // Skeleton loader role
+  });
+
+  it('renders correctly in dark mode', () => {
+    render(<Card title="Dark Mode Test" value="Enabled" />);
+    expect(screen.getByText('Dark Mode Test')).toHaveClass('text-white');
+    expect(screen.getByText('Enabled')).toHaveClass('text-white');
   });
 });

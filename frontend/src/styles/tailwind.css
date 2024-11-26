@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* global.css */
+
+.small-card-base {
+    @apply p-4 pt-2 rounded-md shadow-md flex justify-between items-center w-full h-full border border-light/10 border-t-[7px] dark:border-t-secondary;
+}
+
+.card-base {
+    @apply p-4 pt-2 rounded-md shadow-md flex flex-col w-full h-full border border-light/10 border-t-[7px] dark:border-t-secondary;
+}
+
+.card-light {
+    @apply bg-gray-100 text-black border-t-primary;
+}
+
+.card-dark {
+    @apply bg-gray-800 text-white;
+}

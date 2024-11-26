@@ -10,7 +10,13 @@ export const renderWithRouter = (ui: React.ReactElement) => {
     return render(<MemoryRouter>{ui}</MemoryRouter>);
 };
 
-export const renderWithProviders = (ui: React.ReactElement) => {
+export const renderWithProviders = (ui: React.ReactElement, darkMode = false) => {
+    if (darkMode) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
     return render(<ThemeProvider>{ui}</ThemeProvider>);
 };
 
