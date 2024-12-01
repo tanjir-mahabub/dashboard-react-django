@@ -72,6 +72,12 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+#### Run the WebSocket
+```
+cd ../dashboard_backend
+daphne -b 0.0.0.0 -p 8080 dashboard_backend.asgi:application
+```
+
 The backend will now be available at: `http://127.0.0.1:8000/`
 
 ### 3. Frontend Setup
