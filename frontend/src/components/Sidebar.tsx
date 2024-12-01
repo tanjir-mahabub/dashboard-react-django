@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { HomeIcon, UserIcon, CogIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import useTheme from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
@@ -10,6 +10,7 @@ const Sidebar: React.FC = () => {
     const { isAuthenticated } = useAuth();
     const { showLoader, hideLoader } = useLoader(); // Access loader context
     const navigate = useNavigate();
+    const location = useLocation(); // Get the current location
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const navItems = [
@@ -40,7 +41,9 @@ const Sidebar: React.FC = () => {
                     <li key={index}>
                         <button
                             onClick={() => handleNavigation(item.to)}
-                            className={`${isCollapsed ? 'w-fit sm:w-[40px] justify-center' : 'w-full justify-start'} transition-width duration-300 flex items-center space-x-1 sm:space-x-2 p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700`}
+                            className={`${isCollapsed ? 'w-fit sm:w-[40px] justify-center' : 'w-full justify-start'} transition-width duration-300 flex items-center space-x-1 sm:space-x-2 p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 ${location.pathname === item.to ? 'bg-primary text-white' : ''
+                                }`}
+                            aria-current={location.pathname === item.to ? 'page' : undefined}
                         >
                             <span className="flex items-center justify-center">{item.icon}</span>
                             {!isCollapsed && <span className="transition-all duration-300 text-sm sm:text-base">{item.label}</span>}
@@ -52,10 +55,10 @@ const Sidebar: React.FC = () => {
                         onClick={() => setIsCollapsed(!isCollapsed)}
                         className={`${isCollapsed ? 'w-fit sm:w-[40px] justify-center' : 'w-full justify-start'} group transition-width duration-300 flex items-center space-x-1 sm:space-x-2 p-2 rounded-md mb-6 focus:outline-none hover:text-light hover:bg-primary dark:hover:bg-gray-600`}
                     >
-                        <span className='border rounded group-hover:border-light border-dark p-1'><ArrowRightIcon className="h-3 sm:h-4 w-3 sm:w-4" /></span>
-                        {!isCollapsed && (
-                            <span className='text-sm sm:text-base'>Collapse</span>
-                        )}
+                        <span className="border rounded group-hover:border-light border-dark p-1">
+                            <ArrowRightIcon className="h-3 sm:h-4 w-3 sm:w-4" />
+                        </span>
+                        {!isCollapsed && <span className="text-sm sm:text-base">Collapse</span>}
                     </button>
                 </li>
             </ul>

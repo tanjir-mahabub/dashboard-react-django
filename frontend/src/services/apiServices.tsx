@@ -69,7 +69,7 @@ export const createRealTimeDataWebSocket = (
     onError?: (error: string) => void
 ): WebSocket => {
     const token = localStorage.getItem('authToken');
-    const ws = new WebSocket(`ws://127.0.0.1:8080/ws/realtime-data/?token=${token}`);
+    const ws = new WebSocket(`${import.meta.env.VITE_WEBSOCKET_URL}/realtime-data/?token=${token}`);
 
     ws.onopen = () => {
         console.log('WebSocket connected');
