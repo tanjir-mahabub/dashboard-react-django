@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { fetchCartData } from '../services/apiServices';
+import { CartItem, fetchCartData } from '../services/apiServices';
 import useTheme from '../hooks/useTheme';
 import LoadingCard from './LoadingCard';
 import ErrorCard from './ErrorCard';
-
-interface CartItem {
-    id: number;
-    name: string;
-    quantity: number;
-    price: number;
-}
 
 const ShoppingCart: React.FC = () => {
     const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
@@ -51,8 +44,9 @@ const ShoppingCart: React.FC = () => {
                     <li key={item.id} className="flex justify-between">
                         <span>{item.name}</span>
                         <span>
-                            {item.quantity} x ${item.price.toFixed(2)}
+                            {item.quantity} x ${Number(item.price).toFixed(2)}
                         </span>
+
                     </li>
                 ))}
             </ul>
