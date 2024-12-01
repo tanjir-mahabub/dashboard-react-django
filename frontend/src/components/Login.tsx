@@ -26,7 +26,7 @@ const Login: React.FC = () => {
 
     return (
         <div
-            className={`h-[85vh] flex justify-center items-center ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}
+            className={`w-full h-[85vh] p-5 flex justify-center items-center ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}
         >
             <div className={`p-6 rounded-md shadow-lg w-full max-w-md ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
                 <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>

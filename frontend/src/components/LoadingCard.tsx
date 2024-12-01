@@ -12,7 +12,7 @@ const LoadingCard: React.FC<LoadingCardProps> = ({ title = 'Loading...', loading
 
     return (
         <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <h2 className="text-lg font-semibold text-dark dark:text-light pb-4">{title}</h2>
+            <h2 className="text-sm sm:text-lg font-bold text-dark dark:text-light pb-4">{title}</h2>
 
             {loadingType === 'pulse' ? (
                 <div className="animate-pulse flex-1 flex w-full justify-between">

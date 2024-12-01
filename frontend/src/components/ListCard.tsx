@@ -33,10 +33,10 @@ const ListCard: React.FC = () => {
 
     return (
         <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <h2 className="text-lg font-semibold text-dark dark:text-light">Items</h2>
+            <h2 className="text-base sm:text-lg font-bold text-dark dark:text-light">Items</h2>
             <ul className="space-y-2 mt-3">
                 {items.map((item) => (
-                    <li key={item.id} className="flex justify-between gap-5">
+                    <li key={item.id} className="flex justify-between gap-5 text-sm sm:text-base">
                         <span>{item.name}</span>
                         <span>{item.description}</span>
                     </li>

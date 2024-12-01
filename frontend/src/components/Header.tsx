@@ -18,10 +18,10 @@ const Header: React.FC = () => {
     };    
 
     return (
-        <header className="bg-light text-dark dark:bg-dark dark:text-light p-4 flex justify-between items-center h-[10vh] border-b">
+        <header className="relative z-50 bg-light text-dark dark:bg-dark dark:text-light p-2 sm:p-4 flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 h-[130px] sm:h-[10vh] border-b">
             <div>
-                <h1 className="text-3xl font-bold text-dark dark:text-white">JOB-24FEBFF24</h1>
-                <p className="text-dark dark:text-gray-400">Technical Assessment - Dashboard Development</p>
+                <h1 className="text-lg sm:text-3xl font-bold text-dark dark:text-white">JOB-24FEBFF24</h1>
+                <p className="text-sm sm:text-base text-dark dark:text-gray-400">Technical Assessment - Dashboard Development</p>               
             </div>
             <div className="flex items-center space-x-4">
                 {isAuthenticated ? (

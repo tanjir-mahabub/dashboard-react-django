@@ -38,10 +38,10 @@ const ShoppingCart: React.FC = () => {
 
     return (
         <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <h2 className="text-lg font-semibold text-dark dark:text-light pb-4">Shopping Cart</h2>
+            <h2 className="text-base sm:text-lg font-bold text-dark dark:text-light pb-4">Shopping Cart</h2>
             <ul className="space-y-2">
                 {cartItems?.map((item) => (
-                    <li key={item.id} className="flex justify-between">
+                    <li key={item.id} className="flex justify-between text-sm sm:text-base">
                         <span>{item.name}</span>
                         <span>
                             {item.quantity} x ${Number(item.price).toFixed(2)}

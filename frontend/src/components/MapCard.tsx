@@ -47,8 +47,8 @@ const MapCard: React.FC = () => {
     }
 
     return (
-       <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <h2 className="text-lg font-semibold text-dark dark:text-light pb-4">Current Location</h2>
+       <div className={`card-base min-h-[25vh] ${isDarkMode ? 'card-dark' : 'card-light'}`}>
+            <h2 className="text-base sm:text-lg font-bold text-dark dark:text-light pb-4">Current Location</h2>
             <MapContainer
                 center={[position.lat, position.lng]} // Ensure center is passed as [number, number]
                 zoom={13}

@@ -87,7 +87,7 @@ const ChartCard: React.FC = () => {
 
     return (
         <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <h2 className="text-lg font-semibold text-dark dark:text-light pb-4">Sales Chart</h2>
+            <h2 className="text-base sm:text-lg font-bold text-dark dark:text-light pb-4">Sales Chart</h2>
             <Chart type="bar" data={data} options={options} />
         </div>
     );

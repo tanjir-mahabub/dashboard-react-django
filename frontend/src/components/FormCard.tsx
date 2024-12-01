@@ -18,7 +18,7 @@ const FormCard: React.FC = () => {
 
     return (
        <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <h2 className="text-lg font-semibold pb-4">User Info Form</h2>
+            <h2 className="text-lg font-bold pb-4">User Info Form</h2>
             <div className="flex w-full h-full justify-center items-center">
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <input

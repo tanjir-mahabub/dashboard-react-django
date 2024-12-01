@@ -29,34 +29,39 @@ const Dashboard: React.FC = () => {
         loadMetrics();
     }, []);
 
-
-
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4 text-dark dark:text-white">Dashboard</h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-                {error ? (
-                    <ErrorCard title="Metrics" message={error} />
-                ) : loading ? (
-                    Array(4)
-                        .fill(null)
-                        .map((_, index) => <Card key={index} loading />)
-                ) : (
-                    metrics.map((metric) => (
-                        <Card key={metric.title} title={metric.title} value={metric.value} icon={metric.icon} />
-                    ))
-                )}
+        <div className="relative z-10 w-full h-screen flex flex-col">
+            {/* Header */}
+            <div className="shadow px-3 sm:px-6 py-4 relative z-10">
+                <h1 className="text-lg sm:text-2xl font-bold text-dark dark:text-white">Dashboard</h1>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                <div className="col-span-4 lg:col-span-2">
-                    <ChartCard />
+
+            {/* Scrollable Content */}
+            <div className="flex-1 p-3 sm:p-6 space-y-4 overflow-y-scroll scroll-smooth pb-48 sm:pb-52 lg:pb-36">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                    {error ? (
+                        <ErrorCard title="Metrics" message={error} />
+                    ) : loading ? (
+                        Array(4)
+                            .fill(null)
+                            .map((_, index) => <Card key={index} loading />)
+                    ) : (
+                        metrics.map((metric) => (
+                            <Card key={metric.title} title={metric.title} value={metric.value} icon={metric.icon} />
+                        ))
+                    )}
                 </div>
-                <div className="col-span-4 lg:col-span-2">
-                    <MapCard />
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    <div>
+                        <ChartCard />
+                    </div>
+                    <div>
+                        <MapCard />
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 col-span-4 gap-4">
-                    <ShoppingCart />
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
                     <RealTimeDataCard />
+                    <ShoppingCart />
                     <ListCard />
                 </div>
             </div>

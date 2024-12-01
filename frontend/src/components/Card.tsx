@@ -35,9 +35,9 @@ const Card: React.FC<CardProps> = ({ title, value, icon, loading = false, loadin
 
     return (
         <div className={`small-card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
-            <div>
-                <h2 className="text-lg font-semibold">{title}</h2>
-                <p className="text-2xl font-bold">{value}</p>
+            <div className='space-y-2'>
+                <h2 className="text-base sm:text-lg font-bold">{title}</h2>
+                <p className="text-base sm:text-2xl font-bold">{value}</p>
             </div>
             <div>
                 {/* Render the matched icon with dynamic color */}
