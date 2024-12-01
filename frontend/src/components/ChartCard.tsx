@@ -52,7 +52,7 @@ const ChartCard: React.FC = () => {
         loadSalesData();
     }, []);
 
-    if (loading) return <LoadingCard title="Sales Chart" />;
+    if (loading) return <LoadingCard title="Sales Chart" cardStyles="min-h-[320px]" />;
     if (error) return <ErrorCard title="Sales Chart" message={error} />;
 
     const options = {

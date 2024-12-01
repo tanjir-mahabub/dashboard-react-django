@@ -33,7 +33,7 @@ const ShoppingCart: React.FC = () => {
     }
 
     if (loading) {
-        return <LoadingCard title="Shopping Cart" />;
+        return <LoadingCard title="Shopping Cart" cardStyles="min-h-[320px]" />;
     }
 
     return (

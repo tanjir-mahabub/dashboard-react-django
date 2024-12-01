@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { ThemeProvider } from '../context/ThemeProvider';
 import useTheme from '../hooks/useTheme';
 
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../provider/ThemeProvider';
 
 export const renderWithRouter = (ui: React.ReactElement) => {
     return render(<MemoryRouter>{ui}</MemoryRouter>);

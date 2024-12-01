@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 p-3 sm:p-6 space-y-4 overflow-y-scroll scroll-smooth pb-48 sm:pb-52 lg:pb-36">
+            <div className="flex-1 p-3 sm:p-6 space-y-4 overflow-y-scroll scroll-smooth pb-48 sm:pb-52 lg:pb-40">
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                     {error ? (
                         <ErrorCard title="Metrics" message={error} />

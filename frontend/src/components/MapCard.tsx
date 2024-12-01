@@ -43,7 +43,7 @@ const MapCard: React.FC = () => {
     }
 
     if (!position) {
-        return <LoadingCard title="Current Location" />;
+        return <LoadingCard title="Current Location" cardStyles="min-h-[320px]" />;
     }
 
     return (

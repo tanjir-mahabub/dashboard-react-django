@@ -32,7 +32,7 @@ const RealTimeDashboard: React.FC = () => {
         };
     }, []);
 
-    if (loading) return <LoadingCard title="Real-Time Data" />;
+    if (loading) return <LoadingCard title="Real-Time Data" cardStyles="min-h-[320px]" />;
     if (error) return <ErrorCard title="Real-Time Data" message={error} />;
 
     return (

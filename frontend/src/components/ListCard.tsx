@@ -28,7 +28,7 @@ const ListCard: React.FC = () => {
         loadItems();
     }, []);
 
-    if (loading) return <LoadingCard title="Items" />;
+    if (loading) return <LoadingCard title="Items" cardStyles="min-h-[320px]" />;
     if (error) return <ErrorCard title="Items" message={error} />;
 
     return (

@@ -1,30 +1,64 @@
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
+import Dashboard from '../pages/Dashboard';
+import { fetchMetrics } from '../services/apiServices';
 
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import Card from '../components/Card';
+// Mock API service
+vi.mock('../services/apiServices', () => ({
+    fetchMetrics: vi.fn(),
+}));
 
-describe('Card Component', () => {
-    it('renders the card with the title and value', () => {
-        render(<Card title="Total Revenue" value="$45,000" />);
-        expect(screen.getByText('Total Revenue')).toBeInTheDocument();
-        expect(screen.getByText('$45,000')).toBeInTheDocument();
-    });
+describe('Dashboard Page', () => {
+    it('should display loading spinner initially', () => {
+        (fetchMetrics as ReturnType<typeof vi.fn>).mockResolvedValueOnce([]);
 
-    it('renders the card with an optional icon', () => {
         render(
-            <Card
-                title="Gift Available"
-                value="Yes"
-                icon={<span data-testid="icon">🎁</span>}
-            />
+            <MemoryRouter>
+                <Dashboard />
+            </MemoryRouter>
         );
-        expect(screen.getByText('Gift Available')).toBeInTheDocument();
-        expect(screen.getByText('Yes')).toBeInTheDocument();
-        expect(screen.getByTestId('icon')).toBeInTheDocument();
+
+        expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
+        expect(screen.getByRole('status')).toBeInTheDocument(); // Verify the loading spinner is shown
     });
 
-    it('renders a loading state when loading is true', () => {
-        render(<Card loading />);
-        expect(screen.getByRole('status')).toBeInTheDocument(); // Ensure skeleton loader is present
+    it('should render metrics cards after data is loaded', async () => {
+        const mockMetrics = [
+            { title: 'Metric 1', value: 'Value 1', icon: 'Icon 1' },
+            { title: 'Metric 2', value: 'Value 2', icon: 'Icon 2' },
+        ];
+
+        (fetchMetrics as ReturnType<typeof vi.fn>).mockResolvedValueOnce(mockMetrics);
+
+        render(
+            <MemoryRouter>
+                <Dashboard />
+            </MemoryRouter>
+        );
+
+        expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(screen.getByText(/Metric 1/i)).toBeInTheDocument();
+            expect(screen.getByText(/Metric 2/i)).toBeInTheDocument();
+        });
+    });
+
+    it('should show an error message if the API call fails', async () => {
+        (fetchMetrics as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Failed to fetch metrics'));
+
+        render(
+            <MemoryRouter>
+                <Dashboard />
+            </MemoryRouter>
+        );
+
+        expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(screen.getByText(/Failed to load metrics/i)).toBeInTheDocument();
+        });
     });
 });

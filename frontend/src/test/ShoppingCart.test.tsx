@@ -1,52 +1,115 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import ShoppingCart from '../components/ShoppingCart';
-import * as apiService from '../services/apiServices';
+import { fetchCartData } from '../services/apiServices';
 
-// Mock the API service with a spy
-vi.mock('../services/apiServices', { spy: true });
+// Mock the `fetchCartData` API function
+vi.mock('../services/apiServices', () => ({
+    fetchCartData: vi.fn(),
+}));
 
 describe('ShoppingCart Component', () => {
-    it('renders fetched cart items', async () => {
-        // Spy on the actual function
-        const spy = vi.spyOn(apiService, 'fetchCartData');
-
-        // Mock resolved value
-        spy.mockResolvedValue([
-            { id: 1, name: 'Apple', quantity: 3, price: 1.99 },
-            { id: 2, name: 'Banana', quantity: 5, price: 0.99 },
-        ]);
-
-        await act(async () => {
-            render(<ShoppingCart />);
-        });
-
-        // Wait for the items to appear in the DOM
-        await waitFor(() => {
-            expect(screen.getByText('Apple')).toBeInTheDocument();
-            expect(screen.getByText('3 x $1.99')).toBeInTheDocument();
-            expect(screen.getByText('Banana')).toBeInTheDocument();
-            expect(screen.getByText('5 x $0.99')).toBeInTheDocument();
-        });
-
-        // Ensure the spy was called
-        expect(spy).toHaveBeenCalledTimes(1);
+    afterEach(() => {
+        vi.clearAllMocks(); // Ensure mocks are cleared between tests
     });
 
-    // it('handles fetch errors gracefully', async () => {
-    //     const spy = vi.spyOn(apiService, 'fetchCartData');
-    //     spy.mockRejectedValue(new Error('Failed to fetch cart data'));
+    it('renders loading state initially', () => {
+        // Mock `useTheme` for light mode
+        vi.mock('../hooks/useTheme', () => ({
+            default: () => ({
+                theme: 'light',
+            }),
+        }));
 
-    //     await act(async () => {
-    //         render(<ShoppingCart />);
-    //     });
+        render(<ShoppingCart />);
+        expect(screen.getByText('Shopping Cart')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
+    });
 
-    //     await waitFor(() => {
-    //         expect(screen.getByText('Unable to load shopping cart data.')).toBeInTheDocument();
-    //     });
+    it('renders error state when API call fails', async () => {
+        // Mock `useTheme` for light mode
+        vi.mock('../hooks/useTheme', () => ({
+            default: () => ({
+                theme: 'light',
+            }),
+        }));
 
-    //     // Ensure the spy was called
-    //     expect(spy).toHaveBeenCalledTimes(1);
-    // });
-    
+        (fetchCartData as jest.Mock).mockRejectedValueOnce(new Error('API error'));
+
+        render(<ShoppingCart />);
+
+        await waitFor(() =>
+            expect(screen.getByText('Unable to load shopping cart data.')).toBeInTheDocument()
+        );
+    });
+
+    it('renders cart items when API call succeeds', async () => {
+        // Mock `useTheme` for light mode
+        vi.mock('../hooks/useTheme', () => ({
+            default: () => ({
+                theme: 'light',
+            }),
+        }));
+
+        const mockCartData = [
+            { id: 1, name: 'Product A', quantity: 2, price: 25.5 },
+            { id: 2, name: 'Product B', quantity: 1, price: 10.0 },
+        ];
+
+        (fetchCartData as jest.Mock).mockResolvedValueOnce(mockCartData);
+
+        render(<ShoppingCart />);
+
+        await waitFor(() => {
+            expect(screen.getByText('Shopping Cart')).toBeInTheDocument();
+            expect(screen.getByText('Product A')).toBeInTheDocument();
+            expect(screen.getByText('2 x $25.50')).toBeInTheDocument();
+            expect(screen.getByText('Product B')).toBeInTheDocument();
+            expect(screen.getByText('1 x $10.00')).toBeInTheDocument();
+        });
+    });
+
+    it('applies dark mode styles when theme is dark', async () => {
+        // Mock `useTheme` for dark mode
+        vi.mock('../hooks/useTheme', () => ({
+            default: () => ({
+                theme: 'dark',
+            }),
+        }));
+
+        const mockCartData = [
+            { id: 1, name: 'Product A', quantity: 2, price: 25.5 },
+        ];
+
+        (fetchCartData as jest.Mock).mockResolvedValueOnce(mockCartData);
+
+        render(<ShoppingCart />);
+
+        await waitFor(() => {
+            const card = screen.getByText('Shopping Cart').closest('div');
+            expect(card).toHaveClass('card-dark');
+        });
+    });
+
+    it('applies light mode styles when theme is light', async () => {
+        // Mock `useTheme` for light mode
+        vi.mock('../hooks/useTheme', () => ({
+            default: () => ({
+                theme: 'light',
+            }),
+        }));
+
+        const mockCartData = [
+            { id: 1, name: 'Product A', quantity: 2, price: 25.5 },
+        ];
+
+        (fetchCartData as jest.Mock).mockResolvedValueOnce(mockCartData);
+
+        render(<ShoppingCart />);
+
+        await waitFor(() => {
+            const card = screen.getByText('Shopping Cart').closest('div');
+            expect(card).toHaveClass('card-light');
+        });
+    });
 });

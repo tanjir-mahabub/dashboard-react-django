@@ -1,16 +1,85 @@
-import { screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import Header from '../components/Header';
-import { renderWithProviders } from './utils.test';
+import { useAuth } from '../hooks/useAuth';
+import { MemoryRouter } from 'react-router-dom';
+import useTheme from '../hooks/useTheme';
+
+// Mock `useAuth` hook
+vi.mock('../hooks/useAuth', () => ({
+    useAuth: vi.fn(),
+}));
+
+// Mock `useTheme` hook
+vi.mock('../hooks/useTheme', () => ({
+    useTheme: vi.fn(),
+}));
 
 describe('Header Component', () => {
-    it('renders the Dashboard title', () => {
-        renderWithProviders(<Header />);
-        expect(screen.getByText('JOB-24FEBFF24')).toBeInTheDocument(); // Updated to match the title
+    it('renders correctly when authenticated', () => {
+        (useAuth as jest.Mock).mockReturnValue({
+            isAuthenticated: true,
+            user: { username: 'testuser' },
+            logout: vi.fn(),
+        });
+
+        (useTheme as jest.Mock).mockReturnValue({
+            theme: 'light',
+            toggleTheme: vi.fn(),
+        });
+
+        render(
+            <MemoryRouter>
+                <Header />
+            </MemoryRouter>
+        );
+
+        expect(screen.getByText('JOB-24FEBFF24')).toBeInTheDocument();
+        expect(screen.getByText('Technical Assessment - Dashboard Development')).toBeInTheDocument();
+        expect(screen.getByText('testuser')).toBeInTheDocument();
     });
 
-    it('renders the user profile placeholder', () => {
-        renderWithProviders(<Header />);
-        expect(screen.getByText('User')).toBeInTheDocument();
+    it('renders correctly when not authenticated', () => {
+        (useAuth as jest.Mock).mockReturnValue({
+            isAuthenticated: false,
+        });
+
+        (useTheme as jest.Mock).mockReturnValue({
+            theme: 'light',
+            toggleTheme: vi.fn(),
+        });
+
+        render(
+            <MemoryRouter>
+                <Header />
+            </MemoryRouter>
+        );
+
+        expect(screen.getByText('Login')).toBeInTheDocument();
+    });
+
+    it('handles logout click correctly', () => {
+        const mockLogout = vi.fn();
+        (useAuth as jest.Mock).mockReturnValue({
+            isAuthenticated: true,
+            user: { username: 'testuser' },
+            logout: mockLogout,
+        });
+
+        (useTheme as jest.Mock).mockReturnValue({
+            theme: 'light',
+            toggleTheme: vi.fn(),
+        });
+
+        render(
+            <MemoryRouter>
+                <Header />
+            </MemoryRouter>
+        );
+
+        const logoutButton = screen.getByText('Logout');
+        fireEvent.click(logoutButton);
+
+        expect(mockLogout).toHaveBeenCalledTimes(1);
     });
 });

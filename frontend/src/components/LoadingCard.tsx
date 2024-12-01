@@ -3,19 +3,20 @@ import useTheme from '../hooks/useTheme';
 
 interface LoadingCardProps {
     title?: string;
-    loadingType?: 'spinner' | 'pulse'; // Define loading options
+    loadingType?: 'spinner' | 'pulse'; 
+    cardStyles?: string;
 }
 
-const LoadingCard: React.FC<LoadingCardProps> = ({ title = 'Loading...', loadingType = 'spinner' }) => {
+const LoadingCard: React.FC<LoadingCardProps> = ({ title = 'Loading...', loadingType = 'spinner', cardStyles = "" }) => {
     const { theme } = useTheme();
     const isDarkMode = theme === 'dark';
 
     return (
-        <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'}`}>
+        <div className={`card-base ${isDarkMode ? 'card-dark' : 'card-light'} ${cardStyles}`}>
             <h2 className="text-sm sm:text-lg font-bold text-dark dark:text-light pb-4">{title}</h2>
 
             {loadingType === 'pulse' ? (
-                <div className="animate-pulse flex-1 flex w-full justify-between">
+                <div className="animate-pulse flex-1 flex w-full justify-between items-center">
                     <div className='flex-1'>
                         <div
                             className={`h-4 w-3/4 rounded mb-2 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-300'}`}
@@ -29,9 +30,9 @@ const LoadingCard: React.FC<LoadingCardProps> = ({ title = 'Loading...', loading
                     ></div>
                 </div>
             ) : (
-                <div className="flex justify-center items-center h-16">
+                <div className="flex justify-center items-center h-full">
                     <svg
-                        className={`animate-spin h-6 w-6 ${isDarkMode ? 'text-gray-700' : 'text-gray-500'}`}
+                        className={`animate-spin h-6 w-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
